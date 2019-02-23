@@ -1,7 +1,7 @@
 from freezegun import freeze_time
 from pendulum import datetime
 
-from core import applicable_timezones
+from worldspammer.core import applicable_timezones
 
 timezones_test_cases = [
     'America/New_York',

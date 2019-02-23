@@ -7,19 +7,18 @@ services:
       - .:/code
   worker:
     build: .
-    command: "celery -A worker worker --loglevel=info"
+    command: "celery -A worldspammer.workers worker --loglevel=info"
     depends_on:
       - rabbitmq
+    env_file: .env
     links:
       - rabbitmq
     volumes:
       - .:/code
   rabbitmq:
+    env_file: .env
     image: rabbitmq:3.7.2-management-alpine
     ports:
       - "8080:15672"
       - "5672:5672"
-    environment:
-      RABBITMQ_DEFAULT_PASS: doh
-      RABBITMQ_DEFAULT_USER: homer
-      RABBITMQ_DEFAULT_VHOST: springfield
+
