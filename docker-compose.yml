@@ -10,3 +10,13 @@ services:
     command: "python worker.py"
     volumes:
       - .:/code
+  rabbitmq:
+    image: rabbitmq:3
+    ports:
+      - "8888:15672"
+      - "5672:5672"
+      - "5671:5671"
+    environment:
+      RABBITMQ_DEFAULT_PASS: pass
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_VHOST: vhost
