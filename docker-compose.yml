@@ -2,7 +2,12 @@ version: '3'
 services:
   scheduler:
     build: .
-    command: "python scheduler.py"
+    command: "celery -A worldspammer.workers beat --loglevel=info"
+    depends_on:
+      - rabbitmq
+    env_file: .env
+    links:
+      - rabbitmq
     volumes:
       - .:/code
   worker:

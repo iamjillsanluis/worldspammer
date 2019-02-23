@@ -1,10 +1,20 @@
 import os
 import logging
-
 from worldspammer.workers.celery import app
 
 
 log = logging.getLogger(__name__)
+
+
+@app.task
+def spam_bomb():
+    import pendulum
+    from worldspammer.core import applicable_timezones
+    from worldspammer.workers.tasks.spammer import notify_timezone
+
+    for timezone in applicable_timezones():
+        local_time = pendulum.now(timezone)
+        notify_timezone.delay(timezone, local_time.to_date_string())
 
 
 @app.task
