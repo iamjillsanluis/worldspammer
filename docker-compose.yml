@@ -7,16 +7,19 @@ services:
       - .:/code
   worker:
     build: .
-    command: "python worker.py"
+    command: "celery -A worker worker --loglevel=info"
+    depends_on:
+      - rabbitmq
+    links:
+      - rabbitmq
     volumes:
       - .:/code
   rabbitmq:
-    image: rabbitmq:3
+    image: rabbitmq:3.7.2-management-alpine
     ports:
-      - "8888:15672"
+      - "8080:15672"
       - "5672:5672"
-      - "5671:5671"
     environment:
-      RABBITMQ_DEFAULT_PASS: pass
-      RABBITMQ_DEFAULT_USER: user
-      RABBITMQ_DEFAULT_VHOST: vhost
+      RABBITMQ_DEFAULT_PASS: doh
+      RABBITMQ_DEFAULT_USER: homer
+      RABBITMQ_DEFAULT_VHOST: springfield
