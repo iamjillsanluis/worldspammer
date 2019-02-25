@@ -23,7 +23,6 @@ app.conf.update(
 
 
 app.conf.beat_schedule = {
-    # Executes every Monday morning at 7:30 a.m.
     "spam-the-world": {
         "task": "worldspammer.workers.tasks.spammer.spam_bomb",
         "schedule": crontab(hour="*/1", minute=0),
